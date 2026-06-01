@@ -13,5 +13,3 @@ COPY target/*-SNAPSHOT.jar app.jar
 #    - Asia/Seoul 시간대 설정
 #    - UTF-8 문자 인코딩 설정 (한글 깨짐 방지)
 ENTRYPOINT ["java", "-Duser.timezone=Asia/Seoul", "-Dfile.encoding=UTF-8", "-jar", "app.jar"]
-
-
