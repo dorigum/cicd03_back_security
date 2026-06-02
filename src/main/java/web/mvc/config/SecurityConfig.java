@@ -28,7 +28,7 @@ import java.util.Collections;
 @Slf4j
 public class SecurityConfig {
 
-    //AuthenticationManager 가 인자로 받을 AuthenticationConfiguraion 객체 생성자
+    // AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
 
