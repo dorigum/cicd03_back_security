@@ -31,6 +31,7 @@ public class SecurityConfig {
     //AuthenticationManager 가 인자로 받을 AuthenticationConfiguraion 객체 생성자
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
+
     //AuthenticationManager Bean 등록
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
@@ -46,18 +47,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("SecurityFilterChain filterChain(HttpSecurity http) call.....");
-       /////////////////////////////////
+        // ---------------------------------------------------------------
         //CORS 설정
         http.cors((corsCustomizer ->
-                corsCustomizer.configurationSource(new CorsConfigurationSource()
-                {
+                corsCustomizer.configurationSource(new CorsConfigurationSource() {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration configuration = new CorsConfiguration();
-                        //configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
-                        //configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173", "http://localhost:4173"));
-                        configuration.setAllowedOrigins(Arrays.asList("http://43.203.170.229", "http://43.203.170.229:80"));
-                        configuration.setAllowedOrigins(Arrays.asList("http://heejung.n-e.kr", "https://heejung.n-e.kr"));
+                        configuration.setAllowedOrigins(Arrays.asList("http://15.164.226.161", "http://15.164.226.161:80"));
+                        configuration.setAllowedOrigins(Arrays.asList("http://polar-bear.o-r.kr", "https://polar-bear.o-r.kr"));
                         configuration.setAllowedMethods(Collections.singletonList("*"));
                         configuration.setAllowCredentials(true);
 
@@ -68,7 +66,7 @@ public class SecurityConfig {
                         return configuration;
                     }
                 })));
-        ////////////////////////////////////
+        // ----------------------------------------------------------------------
         //csrf disable
         http.csrf((auth) -> auth.disable()); //csrf공격을 방어하기 위한 토큰 주고 받는 부분을 비활성화!
 
@@ -91,7 +89,7 @@ public class SecurityConfig {
 
         //필터 추가 LoginFilter()는 인자를 받음 (AuthenticationManager()
         //메소드에 authenticationConfiguration 객체를 넣어야 함)
-       //addFilterAt 은 UsernamePasswordAuthenticationFilter 의 자리에 LoginFilter 가 실행되도록 설정하는 것
+        //addFilterAt 은 UsernamePasswordAuthenticationFilter 의 자리에 LoginFilter 가 실행되도록 설정하는 것
         //JWTFilter 등록
         http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
