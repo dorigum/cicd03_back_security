@@ -54,14 +54,25 @@ public class SecurityConfig {
                     @Override
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration configuration = new CorsConfiguration();
-                        configuration.setAllowedOrigins(Arrays.asList("http://15.164.226.161", "http://15.164.226.161:80"));
-                        configuration.setAllowedOrigins(Arrays.asList("http://polar-bear.o-r.kr", "https://polar-bear.o-r.kr"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
+
+                        // 1. 허용할 프론트엔드 주소들을 하나의 리스트로 묶어서 설정 (덮어쓰기 방지)
+                        configuration.setAllowedOrigins(Arrays.asList(
+                                "http://43.201.23.5",              // 프론트엔드 IP 주소
+                                "http://polar-bear.o-r.kr",       // 운영 도메인 (HTTP)
+                                "https://polar-bear.o-r.kr"       // 운영 도메인 (HTTPS)
+                        ));
+//                        configuration.setAllowedOrigins(Arrays.asList("http://http://43.201.23.5/", "http://http://43.201.23.5/:80")); // front IP 주소
+//                        configuration.setAllowedOrigins(Arrays.asList("http://polar-bear.o-r.kr", "https://polar-bear.o-r.kr"));
+
+                        // 2. 모든 HTTP 메서드(GET, POST, PUT, DELETE 등) 허용
+                        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                         configuration.setAllowCredentials(true);
 
+                        // 3. 모든 헤더 및 프리플라이트(Preflight) 캐싱 시간 설정
                         configuration.setAllowedHeaders(Collections.singletonList("*"));
                         configuration.setMaxAge(3600L);
 
+                        // 4. 리액트에서 JWT 토큰을 읽을 수 있도록 Authorization 헤더 노출
                         configuration.setExposedHeaders(Collections.singletonList("Authorization"));
                         return configuration;
                     }
