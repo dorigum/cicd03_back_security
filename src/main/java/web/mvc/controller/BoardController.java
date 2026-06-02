@@ -75,9 +75,9 @@ public class BoardController {
 		BoardRes boardRes = new BoardRes(board);
 		return new ResponseEntity<>(boardRes ,HttpStatus.OK);
 	}
-    /**
+    /*
 	 * 게시물 등록
-	 * */
+	 */
 	@PostMapping("/boards/board")
 	public ResponseEntity<?> save(@RequestBody BoardReq board){
 		return new ResponseEntity<>(boardService.addBoard(board),HttpStatus.CREATED);//201
