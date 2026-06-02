@@ -99,15 +99,11 @@ public class BoardController {
 				.id(updatedBoard.getId()).build();
 		return new ResponseEntity<>(br,HttpStatus.OK);
 	}
-	/**
-	 * 글번호에 해당하는 게시물 삭제
-	 * */
+	/*
+	 * 글 번호에 해당하는 게시물 삭제
+	 */
 	@DeleteMapping("/boards/{id}")
 	public ResponseEntity<?> delete(@PathVariable Long id){		
 		return new ResponseEntity<>(boardService.deleteBoard(id),HttpStatus.OK);
 	}
 }
-
-
-
-
