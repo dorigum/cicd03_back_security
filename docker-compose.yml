@@ -1,5 +1,3 @@
-version: '3'  # Docker Compose 파일의 버전. v3은 대부분의 기능을 지원하며 프로덕션 환경에서도 자주 사용됨.
-
 services:
   springboot-app:  # 서비스 이름 (컨테이너 역할 명시)
     image: ${DOCKER_USERNAME}/jwt-app:latest  # 사용할 도커 이미지. GitHub Actions에서 푸시한 최신 버전 사용
